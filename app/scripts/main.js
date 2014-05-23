@@ -1,1 +1,6 @@
-console.log('\'Allo \'Allo!');
+$(document).ready(function(){
+	var music = function(){
+
+	}
+
+});
