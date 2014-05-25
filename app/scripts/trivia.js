@@ -4,9 +4,10 @@ var trivia = function() {
 	var allQuestions = ['{artist} produced the album:','Which artist created the album {album}?'];
   	var currentTrivia={'question':'{artist} produced the album:'};
   	var triviaChoices=[];
+  	var triviaMap = [];
 
   return {
-  	//returns currentQuestion
+  	
   	getCurrentQuestion: function() {
   		return currentTrivia.question;
   	},
@@ -22,33 +23,38 @@ var trivia = function() {
 		currentTrivia.answer=answer;
 	},
 	//sets currentQuestion by using the replace function
+	//to replace the handlebars with content
 	setCurrentQuestion: function(artist) {
 		this.replace(artist,'{artist} ');
 	},
-	//resets the currentQuestion to it's original placemarker form
+	//resets the currentQuestion to 
+	//its original placeholder form
 	reset: function(){
 		currentTrivia.question = allQuestions[0];
 	},
+	//replaces placeholder with the value
 	replace: function(value,placeholder){
 		currentTrivia.question = currentTrivia.question.substring(0,currentTrivia.question.indexOf(placeholder))+
 		value+' '+currentTrivia.question.substring(currentTrivia.question.indexOf(placeholder)+placeholder.length,currentTrivia.question.length);
 	},
-	addTriviaChoice: function(choice){
-		triviaChoices.push(choice);
+	addTriviaMap: function(obj){
+		triviaMap = obj;
 	},
-	getTriviaChoices: function(){
-		return triviaChoices;
+	getTriviaMap: function(obj){
+		return triviaMap;
 	},
-	shuffleTriviaChoices: function(){
-		triviaChoices = _.shuffle(triviaChoices);
+	shuffleTriviaMap: function(){
+		triviaMap = _.shuffle(triviaMap);
 	},
-	display: function(){
-		//display question
-		$('.question').empty().append(trivia.getCurrentQuestion());
-
-		for (var i = 0; i< trivia.getTriviaChoices().length;i++){
-			$('.choice'+(i+1)).empty().append(trivia.getTriviaChoices()[i]);
+	//check if album user selected
+	//belongs
+	verifyChoice: function(choice){
+		if (trivia.getCurrentAnswer() === undefined){
+			console.log('ERROR UNDEFINED');
 		}
+		var userSubmitted = trivia.getCurrentAnswer() === choice;
+		return userSubmitted;
+
 	}
   };
 }();

@@ -1,20 +1,9 @@
 //debugging
 var test;
+var mytest;
 
 $(document).ready(function(){
 
-	var app = function(){
-		return {
-			display:function(){
-				//display title
-				//display img
-				//display list elements
-				//display title
-			}
-
-		};
-
-	};
 
 	var music = function(){
 		var apiKey = '697800e6a9fe10f5c42eab30c9ef6cb4';
@@ -22,6 +11,8 @@ $(document).ready(function(){
 		//var ajaxParams = {'api_key': apiKey, 'format': 'json'};
 		var artists=[];
 		var response;
+		var score = 0;
+		var lives = 3;
 
 		return{
 			//calls ajax request
@@ -48,7 +39,6 @@ $(document).ready(function(){
 						this.getResponse({'artist':artists[i],'method':'artist.getsimilar'},i,function(response){
 							
 						
-							console.log(response);
 							var numArtists = response.similarartists.artist.length;
 							var randomNum = _.random(1,numArtists-1);
 							var artist = response.similarartists.artist[randomNum].name;
@@ -57,13 +47,13 @@ $(document).ready(function(){
 								if (artists.indexOf(artist) !== -1){
 									randomNum = randomNum = _.random(1,numArtists-1);
 									artist = response.similarartists.artist[randomNum].name;
-									console.log(artist);
+									
 								}
 								music.addArtist(artist);
 								//music.shuffleArtists();
 
 								music.generate(function(){
-									trivia.display();
+									music.display();
 								});
 							}
 						
@@ -73,7 +63,7 @@ $(document).ready(function(){
 						this.getResponse({'artist':artists[i],'method':'artist.getsimilar'},i,function(response){
 							
 						
-							console.log(response);
+							
 							var numArtists = response.similarartists.artist.length;
 							var randomNum = _.random(1,numArtists-1);
 							var artist = response.similarartists.artist[randomNum].name;
@@ -82,7 +72,7 @@ $(document).ready(function(){
 								if (artists.indexOf(artist) !== -1){
 									randomNum = randomNum = _.random(1,numArtists-1);
 									artist = response.similarartists.artist[randomNum].name;
-									console.log(artist);
+					
 								}
 								music.addArtist(artist);
 								music.shuffleArtists();
@@ -136,7 +126,6 @@ $(document).ready(function(){
 				}
 
 
-				console.log(albumArtistMap);
 
 
 				//ajax call for each random artist to get album
@@ -145,7 +134,6 @@ $(document).ready(function(){
 					//ajax call for each random number to get album name
 					this.getResponse({'artist':artist,'method':'artist.gettopalbums'},i, function(response, callIndex){
 
-						console.log(response);
 						//pick random album and save into an array
 
 						//if there is no 'album' field then ignore ajax request
@@ -154,17 +142,17 @@ $(document).ready(function(){
 							randNum = _.random(1,numAlbums-1);
 							
 							albumArtistMap[callIndex].album = response.topalbums.album[randNum].name;
-							trivia.addTriviaChoice(albumArtistMap[callIndex].album);
 							
 						}
 						if (callIndex === albumArtistMap.length -1 ){
+							
+							//set current question
+							trivia.setCurrentQuestion(albumArtistMap[callIndex].artist);
 
-							//we have albums and artists
-							// pick the winner
-							//update on trivia
+							//set current answer
+							trivia.setCurrentAnswer(albumArtistMap[callIndex].album);
 
-							trivia.setCurrentQuestion(albumArtistMap[0].artist);
-							trivia.setCurrentAnswer(albumArtistMap[0].album);
+							trivia.addTriviaMap(albumArtistMap);
 						}
 
 						display();
@@ -174,7 +162,32 @@ $(document).ready(function(){
 					
 				}
 			},
-			init: function(generate){
+			display: function(){
+				trivia.shuffleTriviaMap();
+				//remove classes from previous question
+				$('li').removeClass('correct');
+				$('li').removeClass('incorrect');
+
+				$('.score').empty().append(music.getScore());
+
+				//display question
+				$('.question').empty().append(trivia.getCurrentQuestion());
+
+				for (var i = 0; i< trivia.getTriviaMap().length;i++){
+					$('.choice'+(i+1)).empty().append(trivia.getTriviaMap()[i].album);
+				}
+
+			},
+			updateScore: function(){
+				score= score + 5;
+			},
+			getScore: function(){
+				return score;
+			},
+			loseLife: function(){
+				lives = lives -1;
+			},
+			init: function(){
 				music.addArtist('Led Zeppelin');
 				music.addArtist('Pink Floyd');
 				music.addArtist('Eagles');
@@ -192,11 +205,32 @@ $(document).ready(function(){
 
 	//clicking on choice
 	$('li').on('click',function(){
-		//change colour
-		$(this).css('background','red');
+		// check answer
+		var isCorrect = trivia.verifyChoice($(this).text());
+
+		if (isCorrect){
+			$(this).addClass('correct');
+			music.updateScore();
+			console.log('SCORE IS :   ' + music.getScore());
+
+
+			
+		}else{
+			$(this).addClass('incorrect');
+			music.loseLife();
+		}
+
+		music.generate(function(){
+			music.display();
+		});
+		// if correct, change colour to green
+
+		//if incorrect, change colour to red
+		//and show correct answer in green
+
+
 
 	});
-
 
 
 });

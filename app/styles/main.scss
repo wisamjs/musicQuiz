@@ -8,16 +8,22 @@ $color1 :#7EB5D6;
 $color2 :#2A75A9;
 $color3 :#274257;
 $color4 :#DFC184;
-$color5 :#8F6048;
+$color5 :rgb(210,235,167);
 $color6 :#644436;
+
+
 
 body {
     //background: #fafafa;
-    background:url('https://s3.amazonaws.com/ooomf-com-files/6Icr9fARMmTjTHqTzK8z_DSC_0123.jpg') no-repeat;
+    //'http://goo.gl/LcYEDY'
+    //http://unsplash.s3.amazonaws.com/batch%205/unsplash-kitsune-4.jpg'
+
+    background:url('http://i.imgur.com/idvtVoQ.jpg?1') no-repeat;
     background-size:cover;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #2A75A9;
-
+    color: white;
+    font-family:'Helvetica';
+    font-weight:300;
     padding: 0 auto;
 }
 
@@ -30,8 +36,15 @@ h1{
 }
 
 .trivia{
-     background:$color1;
+     background:rgba(0,0,0,0.5);
     border-radius:10px;
+}
+
+.correct{
+    background: rgba(210,235,167,1);
+}
+.incorrect{
+    background: rgba(238,214,189,1);
 }
 ul{
     list-style:none;
@@ -39,8 +52,13 @@ ul{
 }
 
 li{
-    border: 2px solid $color2;
-    padding:10px;
+    border: 2px solid rgba(238,238,238,0.5);
+    padding:15px;
+    margin-bottom:5px;
+}
+
+li:hover{
+    background:rgba(0,102,153,0.5);
 }
 
 .hero-unit {
