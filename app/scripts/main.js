@@ -1,4 +1,4 @@
-
+var test;
 $(document).ready(function(){
 
 	//Decided to practice using closures
@@ -294,6 +294,6 @@ $(document).ready(function(){
 
 
 	});
-
+test = music;
 
 });
