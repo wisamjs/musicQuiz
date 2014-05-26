@@ -4,14 +4,6 @@
 //Variables
 //=========
 
-$color1 :#7EB5D6;
-$color2 :#2A75A9;
-$color3 :#274257;
-$color4 :#DFC184;
-$color5 :rgb(210,235,167);
-$color6 :#644436;
-
-
 
 body {
     //background: #fafafa;
@@ -20,24 +12,39 @@ body {
 
     background:url('http://i.imgur.com/idvtVoQ.jpg?1') no-repeat;
     background-size:cover;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Ek Mukta', sans-serif;
     color: white;
-    font-family:'Helvetica';
+    font-size: 16px;
     font-weight:300;
     padding: 0 auto;
+    overflow:hidden;
+}
+/* border-box*/
+*{
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 h1{
-    text-align:center;
+    font-size:75px;
+}
+
+h2{
+
 }
 
 .wrapper{
-    margin: 15%;
+    margin: 10% 20% 10% 20%;
+    position:relative;
 }
 
 .trivia{
-     background:rgba(0,0,0,0.5);
-    border-radius:10px;
+     background:rgba(102,0,51,0.5);
+}
+
+.hide{
+    display:none;
 }
 
 .correct{
@@ -51,14 +58,14 @@ ul{
     padding: 0;
 }
 
-li{
+li,{
     border: 2px solid rgba(238,238,238,0.5);
     padding:15px;
     margin-bottom:5px;
 }
 
-li:hover{
-    background:rgba(0,102,153,0.5);
+.quiz li:hover{
+    background:rgba(102,0,51,0.6);
 }
 
 .hero-unit {
@@ -77,9 +84,81 @@ li:hover{
     }
 }
 
-.browsehappy {
-    margin: 0.2em 0;
-    background: #ccc;
-    color: #000;
-    padding: 0.2em 0;
+.score{
+    position:absolute;
+    top:4px;
+    right: 180px;
+    font-size:75px;
+    padding:0;
+    margin:0;
+}
+
+/*Input text*/
+input,button,.results{
+    background:rgba(102,0,51,0.5);
+    border: 2px solid rgba(238,238,238,0.5);
+    width:100%;
+    padding:15px;
+    margin-bottom:5px;
+    color: white;
+    font-family: 'Ek Mukta', sans-serif;
+    font-weight:300;
+
+    font-size: 16px;
+}
+
+button,input[type=submit]{
+     border: none;
+     font-size:20px;
+     text-transform: uppercase;
+     letter-spacing:2px;
+}
+
+input:focus{
+    outline-color:rgba(0,102,153,0.5);
+}
+
+input[type=submit],button{
+    text-align:center;
+    background:rgba(255,204,0,0.5);
+
+}
+
+input[type=submit]:hover{
+     background:rgba(255,204,0,0.6);
+}
+
+.score-icon{
+    width:6%;
+    position:absolute;
+    top:43px;
+    right: 130px;
+}
+
+.lives-icon1{
+    width:6%;
+    height:6%;
+    position:absolute;
+    top:43px;
+    right: 70px;
+}
+
+.lives-icon2{
+  width:6%;
+    height:6%;
+    position:absolute;
+    top:43px;
+    right: 40px;
+}
+
+.lives-icon3{
+    width:6%;
+    height:6%;
+    position:absolute;
+    top:43px;
+    right: 10px;
+}
+
+.results{
+    font-size:27px;
 }

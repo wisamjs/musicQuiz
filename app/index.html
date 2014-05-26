@@ -13,34 +13,62 @@
         <!-- endbower -->
         <!-- endbuild -->
         <!-- build:css(.tmp) styles/main.css -->
+        <link href='http://fonts.googleapis.com/css?family=Ek+Mukta' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="styles/main.css">
+
         <!-- endbuild -->
     </head>
     <body>
-        <h1>Music Trivia</h1>
+       
 
         <div class="wrapper">
-        <h2 class="question"></h2>
-           <div class="trivia">
-             
-             
-             <ul class="choices">
-                 <li class="choice1">Album
-                 </li>
-                 <li class="choice2">Album
-                    
-                 </li>
-                 <li class="choice3">Album
-                    
-                 </li>
-                 <li class="choice4">Album
-                 </li>
-             </ul>
-           </div>
-             <button>Start Over</button>
-             <p><span class="score">0</span> points</p>
-             <p><span class="life">3</span> Lives</p>
-         </div>
+            <h1>Musalicious</h1>
+            <div class="user-input">
+                <h2>Name 3 artists to get started:</h2>
+                <form action="">
+                    <input type="text" placeholder="Led Zeppelin" class="artist1" required>
+                    <input type="text" placeholder="Pink Floyd" class="artist2" required>
+                    <input type="text" placeholder="Eagles" class="artist3" required>
+                   <input type="submit" value="Submit">
+                </form>
+            </div>
+
+            <div class="quiz">
+                <h2 class="question"></h2>
+                <div class="trivia">
+                <ul class="choices">
+                    <li class="choice1">Album
+                    </li>
+                    <li class="choice2">Album
+                        
+                    </li>
+                    <li class="choice3">Album
+                        
+                    </li>
+                    <li class="choice4">Album
+                    </li>
+                </ul>
+                </div>
+                <button class="restart">Start Over</button>
+
+                <div class="user-info">
+                    <p class="score">10</p>
+                    <img src="images/icon_17388.png" alt="" class="score-icon">
+                    <img src="images/icon_111.png" height="1200" width="1200" class="lives-icon1 life" alt="">
+                    <img src="images/icon_111.png" height="1200" width="1200" class="lives-icon2 life" alt="">
+                    <img src="images/icon_111.png" height="1200" width="1200" class="lives-icon3 life" alt="">
+                </div>
+            </div>
+
+            <div class="results">
+                <a href="https://twitter.com/share" class="twitter-share-button" data-via="_wzaghal">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                <button class="restart">Start Over</button>
+
+            </div>
+
+
+        </div>
 
 
 
