@@ -1,14 +1,14 @@
-var test;
+'use strict';
 $(document).ready(function(){
 
 	//Decided to practice using closures
 	var music = function(){
-		var apiKey = '697800e6a9fe10f5c42eab30c9ef6cb4';
-		var format = 'json';
-		var artists=[];
-		var response;
-		var score = 0;
-		var lives = 3;
+		var apiKey = '697800e6a9fe10f5c42eab30c9ef6cb4',
+			format = 'json',
+			artists=[],
+			response,
+			score = 0,
+			lives = 3;
 
 		return{
 			//Calls ajax request that
@@ -32,6 +32,10 @@ $(document).ready(function(){
 			//Adds similar artists to the ones
 			//in the artist array.
 			getSimilarArtists:function(){
+				var numArtists = 0,
+					randomNum = 0,
+					artist = ' ';
+
 				for (var i = 0; i< artists.length; i++){
 
 					//quick hack to get music.generate to work after the last ajax call.
@@ -42,13 +46,13 @@ $(document).ready(function(){
 					// but I fix this problem by using the 'callIndex' parameter
 					if (i === artists.length -1 ){
 						this.getResponse({'artist':artists[i],'method':'artist.getsimilar'},i,function(response){
-							
+
 							//Get random number between 1 and the number of albums
 							//the artist has (not inclusive)
-							var numArtists = response.similarartists.artist.length;
-							var randomNum = _.random(1,numArtists-1);
-							var artist = response.similarartists.artist[randomNum].name;
-							
+							numArtists = response.similarartists.artist.length;
+							randomNum = _.random(1,numArtists-1);
+							artist = response.similarartists.artist[randomNum].name;
+
 							//Loop to make sure we only add unique artists
 							//that haven't been added before
 							while (artists.indexOf(artist) === -1){
@@ -58,7 +62,7 @@ $(document).ready(function(){
 									//is also not unique
 									randomNum = randomNum = _.random(1,numArtists-1);
 									artist = response.similarartists.artist[randomNum].name;
-									
+
 								}
 
 								music.addArtist(artist);
@@ -70,37 +74,37 @@ $(document).ready(function(){
 							music.generate(function(){
 								music.display();
 							});
-						
+
 						});
 					}
 					else{
 						this.getResponse({'artist':artists[i],'method':'artist.getsimilar'},i,function(response){
-							
-						
+
+
 							//Get random number between 1 and the number of albums
-							//the artist has (not inclusive)							
-							var numArtists = response.similarartists.artist.length;
-							var randomNum = _.random(1,numArtists-1);
-							var artist = response.similarartists.artist[randomNum].name;
+							//the artist has (not inclusive)
+							numArtists = response.similarartists.artist.length;
+							randomNum = _.random(1,numArtists-1);
+							artist = response.similarartists.artist[randomNum].name;
 
 							//Loop to make sure we only add unique artists
-							//that haven't been added before							
+							//that haven't been added before
 							while (artists.indexOf(artist) === -1){
 								if (artists.indexOf(artist) !== -1){
 									//if artist already exists, get another random artist.
 									//Will make a note to improve this in case next artist
-									//is also not unique									
+									//is also not unique
 									randomNum = randomNum = _.random(1,numArtists-1);
 									artist = response.similarartists.artist[randomNum].name;
-					
+
 								}
 								music.addArtist(artist);
 								music.shuffleArtists();
 							}
-						
+
 						});
 					}
-				}	
+				}
 			},
 			//adds artist to array
 			addArtist: function(artist){
@@ -122,15 +126,16 @@ $(document).ready(function(){
 			//generates data for trivia
 			//by making multiple ajax calls
 			generate: function( display){
-				
-				var randNum;
-				var albumArtistMap = [];
-				var randArtists = [];
+				var randNum,
+					albumArtistMap = [],
+					randArtists = [],
+					artist=' ',
+					numAlbums=0;
 
 
 				//pick 4 random artists
 				while (randArtists.length < 4){
-					
+
 					randNum = _.random(1,this.getArtists().length-1);
 
 					//if unique random number, add to array and artist-album map
@@ -138,7 +143,7 @@ $(document).ready(function(){
 						randArtists.push(this.getArtists()[randNum]);
 						albumArtistMap.push({'artist':this.getArtists()[randNum]});
 					}
-					
+
 				}
 
 
@@ -147,7 +152,7 @@ $(document).ready(function(){
 				//ajax call for each random artist in map to get album
 				for (var i = 0; i< albumArtistMap.length; i++){
 
-					var artist = albumArtistMap[i].artist;
+					artist = albumArtistMap[i].artist;
 					//ajax call for each random number to get album name
 					this.getResponse({'artist':artist,'method':'artist.gettopalbums'},i, function(response, callIndex){
 
@@ -155,14 +160,14 @@ $(document).ready(function(){
 
 						//if there is no 'album' field then ignore ajax request
 						if (response.topalbums.hasOwnProperty('album')){
-							var numAlbums = response.topalbums.album.length;
+							numAlbums = response.topalbums.album.length;
 							randNum = _.random(1,numAlbums-1);
-							
+
 							albumArtistMap[callIndex].album = response.topalbums.album[randNum].name;
-							
+
 						}
 						if (callIndex === albumArtistMap.length -1 ){
-							
+
 							//save question, answer and albumArtistMap
 							trivia.setCurrentQuestion(albumArtistMap[callIndex].artist);
 							trivia.setCurrentAnswer(albumArtistMap[callIndex].album);
@@ -171,10 +176,9 @@ $(document).ready(function(){
 
 						//call display callback
 						display();
-					
-					});						
-					
-					
+
+					});
+
 				}
 			},
 			//Displays data onto the html
@@ -220,7 +224,7 @@ $(document).ready(function(){
 			//resets lives to 0,
 			//and resets any hidden lives on screen
 			resetLives: function(){
-				$( ".life" ).each(function( index ) {
+				$( '.life' ).each(function( index ) {
 					$(this).fadeIn();
 				});
 				lives = 3;
@@ -261,7 +265,7 @@ $(document).ready(function(){
 			music.updateScore();
 
 
-			
+
 		}else{
 			$(this).addClass('incorrect');
 			music.loseLife();
@@ -294,6 +298,5 @@ $(document).ready(function(){
 
 
 	});
-test = music;
 
 });
