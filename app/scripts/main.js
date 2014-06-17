@@ -2,11 +2,10 @@
 $(document).ready(function(){
 
 	//Decided to practice using closures
-	var music = function(){
+	var music = (function(){
 		var apiKey = '697800e6a9fe10f5c42eab30c9ef6cb4',
 			format = 'json',
 			artists=[],
-			response,
 			score = 0,
 			lives = 3;
 
@@ -180,7 +179,6 @@ $(document).ready(function(){
 
 						//call display callback
 						display();
-
 					});
 
 				}
@@ -228,7 +226,7 @@ $(document).ready(function(){
 			//resets lives to 0,
 			//and resets any hidden lives on screen
 			resetLives: function(){
-				$( '.life' ).each(function( index ) {
+				$( '.life' ).each(function() {
 					$(this).fadeIn();
 				});
 				lives = 3;
@@ -244,18 +242,18 @@ $(document).ready(function(){
 			},
 		};
 
-	}();
+	}());
 
 	//displays initial user view
 	$('.quiz').hide();
 	$('.results').hide();
 
 	//user submits form
-	$( "form" ).on( "submit", function( event ) {
-  		event.preventDefault();
-  		music.init($('.artist1').val(),$('.artist2').val(),$('.artist3').val());
-  		$('.user-input').fadeOut();
-  		$('.quiz').fadeIn();
+	$( 'form' ).on( 'submit', function( event ) {
+		event.preventDefault();
+		music.init($('.artist1').val(),$('.artist2').val(),$('.artist3').val());
+		$('.user-input').fadeOut();
+		$('.quiz').fadeIn();
 
 	});
 
