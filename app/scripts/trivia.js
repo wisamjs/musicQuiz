@@ -25,7 +25,7 @@ var trivia = function() {
 		setCurrentQuestion: function(artist) {
 			currentTrivia.question = artist + ' '+ 'produced the album:';
 		},
-		//resets the currentQuestion to 
+		//resets the currentQuestion to
 		//its original placeholder form
 		reset: function(){
 			currentTrivia.question = allQuestions[0];
@@ -42,10 +42,11 @@ var trivia = function() {
 		},
 		//check if choice is correct
 		verifyChoice: function(choice){
+			var userSubmitted;
 			if (trivia.getCurrentAnswer() === undefined){
 				console.log('ERROR UNDEFINED');
 			}
-			var userSubmitted = trivia.getCurrentAnswer() === choice;
+			userSubmitted = trivia.getCurrentAnswer() === choice;
 			return userSubmitted;
 
 		}

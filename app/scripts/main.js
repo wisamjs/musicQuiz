@@ -32,11 +32,13 @@ $(document).ready(function(){
 			//Adds similar artists to the ones
 			//in the artist array.
 			getSimilarArtists:function(){
-				var numArtists = 0,
-					randomNum = 0,
-					artist = ' ';
+				var  i,
+					max,
+					numArtists,
+					randomNum,
+					artist;
 
-				for (var i = 0; i< artists.length; i++){
+				for (i = 0, max = artists.length; i< max; i++){
 
 					//quick hack to get music.generate to work after the last ajax call.
 					//had issues with asynchronouse calls, so used an if statement
@@ -126,7 +128,9 @@ $(document).ready(function(){
 			//generates data for trivia
 			//by making multiple ajax calls
 			generate: function( display){
-				var randNum,
+				var i,
+					max,
+					randNum,
 					albumArtistMap = [],
 					randArtists = [],
 					artist=' ',
@@ -150,7 +154,7 @@ $(document).ready(function(){
 
 
 				//ajax call for each random artist in map to get album
-				for (var i = 0; i< albumArtistMap.length; i++){
+				for (i = 0, max = albumArtistMap.length; i< max; i++){
 
 					artist = albumArtistMap[i].artist;
 					//ajax call for each random number to get album name
